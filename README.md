@@ -1,6 +1,6 @@
 # Raytracer
 
-A simple C++ Raytracer.
+A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 
 ![render image](docs/render.png)
 
