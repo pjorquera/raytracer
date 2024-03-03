@@ -23,7 +23,7 @@ public:
     bool scatter(const Ray& ray, const Hit& hit, Color& attenuation, Ray& scattered) const override {
         auto direction = hit.normal() + Vector::randomUnitInUnitSphere();
         if (direction.isNearZero()) direction = hit.normal();
-        scattered = Ray(hit.point(), direction);
+        scattered = Ray(hit.point(), direction, ray.time());
         attenuation = _albedo;
         return true;
     }
@@ -42,7 +42,7 @@ public:
     Metal(const Color& color, double fuzz):_albedo(color), _fuzz(fuzz < 1.0 ? fuzz : 1.0) {}
     bool scatter(const Ray& ray, const Hit& hit, Color& attenuation, Ray& scattered) const override {
         Vector reflected = Vector::reflect(ray.dir().unit(), hit.normal());
-        scattered = Ray(hit.point(), reflected + _fuzz * Vector::randomUnitInUnitSphere());
+        scattered = Ray(hit.point(), reflected + _fuzz * Vector::randomUnitInUnitSphere(), ray.time());
         attenuation = _albedo;
         return true;
     }
@@ -80,7 +80,7 @@ public:
         else
             direction = Vector::refract(unitDirection, hit.normal(), refractionRatio);
 
-        scattered = Ray(hit.point(), direction);
+        scattered = Ray(hit.point(), direction, ray.time());
         
         return true;
     }

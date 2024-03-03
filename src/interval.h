@@ -24,7 +24,7 @@ public:
     }
         
     bool contains(double x) const {
-        return _min < x && x < _max;
+        return _min <= x && x <= _max;
     }
     
     double clamp(double x) const {

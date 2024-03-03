@@ -71,7 +71,8 @@ void Camera::render(const shared_ptr<const Intersectable>& intersectable, const 
                 }
                 const auto rayOrigin = (_defocusAngle <= 0.0) ? _lookFrom : defocusDiskSample();
                 const auto rayDirection = pixelSample - rayOrigin;
-                const auto ray = Ray(rayOrigin, rayDirection);
+                const auto rayTime = randomDouble();
+                const auto ray = Ray(rayOrigin, rayDirection, rayTime);
                 pixelColor += color(ray, _maxDepth, intersectable);
             }
             _frameBuffer->draw(x, y, (pixelColor * sampleScaling).gammaCorrected());

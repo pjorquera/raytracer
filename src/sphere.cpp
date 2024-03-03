@@ -3,7 +3,8 @@
 using namespace std;
 
 bool Sphere::intersects(const Ray& ray, const Interval& interval, Hit& hit) const {
-    const auto oc = ray.orig() - _center;
+    const auto currentCenter = _isMoving ? center(ray.time()) : _center;
+    const auto oc = ray.orig() - currentCenter;
     const auto a = ray.dir().lengthSquared();
     const auto halfB = Vector::dot(oc, ray.dir());
     const auto c = oc.lengthSquared() - _radius * _radius;
@@ -20,7 +21,7 @@ bool Sphere::intersects(const Ray& ray, const Interval& interval, Hit& hit) cons
     
     hit.setT(root);
     hit.setPoint(ray.at(hit.t()));
-    Vector outwardNormal = (hit.point() - _center) / _radius;
+    Vector outwardNormal = (hit.point() - currentCenter) / _radius;
     hit.setFaceNormal(ray, outwardNormal);
     hit.setMaterial(_material);
     
