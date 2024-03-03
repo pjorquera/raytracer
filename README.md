@@ -4,6 +4,8 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 
 ![render image](docs/render.png)
 
+![render image with motion blur](docs/render-motion-blur.png)
+
 ## Features
 
 * Raytracing sphere geometries with front face detection.
@@ -18,6 +20,7 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 * Refraction with Snell's law.
 * Schlick approximation.
 * Defocus blur.
+* Motion blur.
 
 ## Building
 
