@@ -10,8 +10,8 @@ int main() {
     const auto materialGround = make_shared<Lambertian>(Color(0.5, 0.5, 0.5));
     scene->add(make_shared<Sphere>(Point(0.0, -1000.0, 0.0), 1000.0, materialGround));
     
-    for (auto a = -11; a < 11; a++) {
-        for (auto b = -11; b < 11; b++) {
+    for (auto a = -1; a < 1; a++) {
+        for (auto b = -1; b < 1; b++) {
             const auto chooseMat = randomDouble();
             const Point center(a + 0.9 * randomDouble(), 0.2, b + 0.9 * randomDouble());
 

@@ -2,6 +2,7 @@
 
 #include "ray.h"
 #include "interval.h"
+#include "aabb.h"
 
 #include <memory>
 
@@ -47,5 +48,6 @@ public:
                             const Interval& interval,
                             Hit& hit
                             ) const = 0;
+    virtual Aabb boundingBox() const = 0;
     
 };

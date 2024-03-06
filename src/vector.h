@@ -28,6 +28,8 @@ public:
     inline double g() const { return _c[1]; }
     inline double b() const { return _c[2]; }
     
+    inline double operator[](int index) const { return _c[index]; }
+    
     Vector operator-() const { return Vector(-x(), -y(), -z()); }
     
     Vector& operator+=(const Vector& v) {
