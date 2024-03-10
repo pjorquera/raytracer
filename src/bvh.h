@@ -2,6 +2,8 @@
 
 #include "scene.h"
 
+#include <algorithm>
+
 class Bvh : public Intersectable {
 
 private:
