@@ -43,9 +43,9 @@ private:
 public:
     
     Camera(double aspect = 16.0 / 9.0,
-           int samplesPerPixel = 20,
+           int samplesPerPixel = 500,
            int maxDepth = 50,
-           int imageWidth = 400,
+           int imageWidth = 1920,
            double vfov = 20.0,
            Vector lookFrom = Vector(13.0, 2.0, 3.0),
            Vector lookAt = Vector(0.0, 0.0, 0.0),
