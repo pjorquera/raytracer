@@ -50,7 +50,8 @@ int main() {
     scene->add(make_shared<Sphere>(Point(4.0, 1.0, 0.0), 1.0, material3));
 
     shared_ptr<Scene> bvh = make_shared<Scene>();
-    bvh->add(make_shared<Bvh>(scene.get()));
+    const auto intersectables = scene->intersectables();
+    bvh->add(make_shared<Bvh>(intersectables));
     
     Camera().render(bvh, "image.ppm");
     return 0;

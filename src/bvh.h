@@ -1,7 +1,5 @@
 #pragma once
 
-#include "scene.h"
-
 #include <algorithm>
 
 class Bvh : public Intersectable {
@@ -13,8 +11,7 @@ private:
     Aabb _bbox;
     
 public:
-    Bvh(const Scene* scene): Bvh(*scene) {}
-    Bvh(const Scene& scene): Bvh(scene.intersectables(), 0, scene.intersectables().size()) {}
+    Bvh(const std::vector<std::shared_ptr<Intersectable> >& intersectables): Bvh(intersectables, 0, intersectables.size()) {}
     Bvh(const std::vector<std::shared_ptr<Intersectable> >& intersectables, size_t start, size_t end) {
         auto objects = intersectables;
 
