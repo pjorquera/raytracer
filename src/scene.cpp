@@ -2,9 +2,9 @@
 
 using namespace std;
 
-void Scene::add(shared_ptr<const Intersectable> intersectable) {
+void Scene::add(shared_ptr<Intersectable> intersectable) {
     _intersectables.push_back(intersectable);
-    _boundingBox = Aabb(_boundingBox, intersectable.get()->boundingBox());
+    _boundingBox = Aabb(_boundingBox, intersectable->boundingBox());
 }
 
 bool Scene::intersects(const Ray& ray, const Interval& interval, Hit& hit) const {

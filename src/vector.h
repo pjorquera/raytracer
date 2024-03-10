@@ -9,6 +9,10 @@ inline double randomDouble(double min = 0.0, double max = 1.0) {
     return min + (max - min) * distribution(generator);
 }
 
+inline int randomInt(int min, int max) {
+    return int(randomDouble(min, max + 1));
+}
+
 class Vector {
 
 private:

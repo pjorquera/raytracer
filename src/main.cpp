@@ -1,6 +1,7 @@
 #include "camera.h"
 #include "sphere.h"
 #include "scene.h"
+#include "bvh.h"
 
 using namespace std;
 
@@ -10,8 +11,8 @@ int main() {
     const auto materialGround = make_shared<Lambertian>(Color(0.5, 0.5, 0.5));
     scene->add(make_shared<Sphere>(Point(0.0, -1000.0, 0.0), 1000.0, materialGround));
     
-    for (auto a = -1; a < 1; a++) {
-        for (auto b = -1; b < 1; b++) {
+    for (auto a = -11; a < 11; a++) {
+        for (auto b = -11; b < 11; b++) {
             const auto chooseMat = randomDouble();
             const Point center(a + 0.9 * randomDouble(), 0.2, b + 0.9 * randomDouble());
 
@@ -47,7 +48,10 @@ int main() {
 
     auto material3 = make_shared<Metal>(Color(0.7, 0.6, 0.5), 0.0);
     scene->add(make_shared<Sphere>(Point(4.0, 1.0, 0.0), 1.0, material3));
-        
-    Camera().render(scene, "image.ppm");
+
+    shared_ptr<Scene> bvh = make_shared<Scene>();
+    bvh->add(make_shared<Bvh>(scene.get()));
+    
+    Camera().render(bvh, "image.ppm");
     return 0;
 }
