@@ -1,6 +1,7 @@
 #pragma once
 
 #include "intersectable.h"
+#include "texture.h"
 
 class Material {
   
@@ -15,16 +16,18 @@ class Lambertian : public Material {
   
 private:
     
-    Color _albedo;
+    std::shared_ptr<Texture> _albedo;
     
 public:
     
-    Lambertian(const Color& color):_albedo(color) {}
+    Lambertian(const Color& color):Lambertian(std::make_shared<SolidColor>(color)) {}
+    Lambertian(const std::shared_ptr<Texture>& texture): _albedo(texture) {}
+    
     bool scatter(const Ray& ray, const Hit& hit, Color& attenuation, Ray& scattered) const override {
         auto direction = hit.normal() + Vector::randomUnitInUnitSphere();
         if (direction.isNearZero()) direction = hit.normal();
         scattered = Ray(hit.point(), direction, ray.time());
-        attenuation = _albedo;
+        attenuation = _albedo->color(hit.u(), hit.v(), hit.point());
         return true;
     }
     

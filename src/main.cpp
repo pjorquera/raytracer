@@ -2,13 +2,15 @@
 #include "sphere.h"
 #include "scene.h"
 #include "bvh.h"
+#include "texture.h"
 
 using namespace std;
 
-int main() {
+void randomSpheres() {
     shared_ptr<Scene> scene = make_shared<Scene>();
     
-    const auto materialGround = make_shared<Lambertian>(Color(0.5, 0.5, 0.5));
+    const auto checker = std::make_shared<CheckerTexture>(0.32, Color(.2, .3, .1), Color(.9, .9, .9));
+    const auto materialGround = make_shared<Lambertian>(checker);
     scene->add(make_shared<Sphere>(Point(0.0, -1000.0, 0.0), 1000.0, materialGround));
     
     for (auto a = -11; a < 11; a++) {
@@ -54,5 +56,25 @@ int main() {
     bvh->add(make_shared<Bvh>(intersectables));
     
     Camera().render(bvh, "image.ppm");
+}
+
+void twoSpheres() {
+    shared_ptr<Scene> scene = make_shared<Scene>();
+    
+    const auto checker = make_shared<CheckerTexture>(0.8, Color(.2, .3, .1), Color(.9, .9, .9));
+    
+    scene->add(make_shared<Sphere>(Point(0.0, -10.0, 0.0), 10.0, make_shared<Lambertian>(checker)));
+    scene->add(make_shared<Sphere>(Point(0.0, 10.0, 0.0), 10.0, make_shared<Lambertian>(checker)));
+
+    Camera camera(16.0 / 9.0, 50, 50, 400, 20.0, Vector(13.0, 2.0, 3.0), Vector(0.0, 0.0, 0.0), Vector(0.0, 1.0, 0.0), 0.0, 10.0);
+
+    camera.render(scene, "image.ppm");
+}
+
+int main() {
+    switch (2) {
+        case 1: randomSpheres(); break;
+        case 2: twoSpheres(); break;
+    }
     return 0;
 }

@@ -1,5 +1,7 @@
 #include "sphere.h"
 
+#include <cmath>
+
 using namespace std;
 
 bool Sphere::intersects(const Ray& ray, const Interval& interval, Hit& hit) const {
@@ -23,7 +25,16 @@ bool Sphere::intersects(const Ray& ray, const Interval& interval, Hit& hit) cons
     hit.setPoint(ray.at(hit.t()));
     Vector outwardNormal = (hit.point() - currentCenter) / _radius;
     hit.setFaceNormal(ray, outwardNormal);
+    Sphere::computeUV(outwardNormal, hit);
     hit.setMaterial(_material);
     
     return true;
+}
+
+void Sphere::computeUV(const Point& point, Hit& hit) {
+    const auto theta = acos(-point.y());
+    const auto phi = atan2(-point.z(), point.x()) + M_PI;
+
+    hit.setU(phi / (2.0 * M_PI));
+    hit.setV(theta / M_PI);
 }

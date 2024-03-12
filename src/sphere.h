@@ -40,4 +40,6 @@ public:
     
     Aabb boundingBox() const override { return _boundingBox; }
     
+    static void computeUV(const Point& point, Hit& hit);
+    
 };
