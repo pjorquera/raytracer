@@ -72,7 +72,7 @@ void twoSpheres() {
 }
 
 int main() {
-    switch (2) {
+    switch (1) {
         case 1: randomSpheres(); break;
         case 2: twoSpheres(); break;
     }
