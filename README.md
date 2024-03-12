@@ -21,6 +21,7 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 * Schlick approximation.
 * Defocus blur.
 * Motion blur.
+* Checked textures.
 
 ## Building
 
