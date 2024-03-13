@@ -4,19 +4,31 @@
 #define STBI_FAILURE_USERMSG
 #include "stb_image.h"
 
+#include <iostream>
+
+using namespace std;
+
 inline int clamp(int x, int low, int high) {
     return (x < low) ? low : ((x < high) ? x : high - 1);
 }
 
-Image::Image(const std::string& filename) {
-    load(filename);
+Image::Image(const string& filename) {
+    if(load(filename)) return;
+    if(load("resources/" + filename)) return;
+    if(load("../resources/" + filename)) return;
+    if(load("../../resources/" + filename)) return;
+    if(load("../../../resources/" + filename)) return;
+    if(load("../../../../resources/" + filename)) return;
+    if(load("../../../../../resources/" + filename)) return;
+    if(load("../../../../../../resources/" + filename)) return;
+    cerr << "ERROR: Could not load image file '" << filename << "'" << endl;
 }
 
 Image::~Image() {
     STBI_FREE(_data);
 }
 
-bool Image::load(const std::string& filename) {
+bool Image::load(const string& filename) {
     auto n = _bytesPerPixel;
     _data = stbi_load(filename.c_str(), &_width, &_height, &n, _bytesPerPixel);
     _bytesPerScanline = _width * _bytesPerPixel;
