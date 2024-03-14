@@ -96,13 +96,15 @@ class NoiseTexture : public Texture {
 private:
     
     Perlin _noise;
+    double _scale;
     
 public:
     
-    NoiseTexture() {}
+    NoiseTexture():NoiseTexture(1.0) {}
+    NoiseTexture(double scale):_scale(scale) {}
     
     Color color(double u, double v, const Point &point) override {
-        return Color(1.0, 1.0, 1.0) * _noise.noise(point);
+        return Color(1.0, 1.0, 1.0) * 0.5 * (1.0 + _noise.noise(_scale * point));
     }
     
 };

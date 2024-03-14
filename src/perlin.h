@@ -6,7 +6,7 @@ class Perlin {
   
 private:
 
-    double* _randomData;
+    Vector* _randomData;
     int* _permuteX;
     int* _permuteY;
     int* _permuteZ;

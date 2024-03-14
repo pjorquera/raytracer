@@ -87,7 +87,7 @@ void earth() {
 void twoPerlinSpheres() {
     shared_ptr<Scene> scene = make_shared<Scene>();
     
-    auto perlinTexture = make_shared<NoiseTexture>();
+    auto perlinTexture = make_shared<NoiseTexture>(4.0);
     scene->add(make_shared<Sphere>(Point(0.0, -1000.0, 0.0), 1000, make_shared<Lambertian>(perlinTexture)));
     scene->add(make_shared<Sphere>(Point(0.0, 2.0, 0.0), 2.0, make_shared<Lambertian>(perlinTexture)));
     
