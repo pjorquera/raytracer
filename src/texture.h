@@ -2,6 +2,7 @@
 
 #include "vector.h"
 #include "image.h"
+#include "perlin.h"
 
 #include <memory>
 #include <string>
@@ -86,6 +87,22 @@ public:
 
         auto colorScale = 1.0 / 255.0;
         return Color(colorScale * pixel[0], colorScale * pixel[1], colorScale * pixel[2]);
+    }
+    
+};
+
+class NoiseTexture : public Texture {
+  
+private:
+    
+    Perlin _noise;
+    
+public:
+    
+    NoiseTexture() {}
+    
+    Color color(double u, double v, const Point &point) override {
+        return Color(1.0, 1.0, 1.0) * _noise.noise(point);
     }
     
 };

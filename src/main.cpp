@@ -84,11 +84,24 @@ void earth() {
     camera.render(scene, "image.ppm");
 }
 
+void twoPerlinSpheres() {
+    shared_ptr<Scene> scene = make_shared<Scene>();
+    
+    auto perlinTexture = make_shared<NoiseTexture>();
+    scene->add(make_shared<Sphere>(Point(0.0, -1000.0, 0.0), 1000, make_shared<Lambertian>(perlinTexture)));
+    scene->add(make_shared<Sphere>(Point(0.0, 2.0, 0.0), 2.0, make_shared<Lambertian>(perlinTexture)));
+    
+    Camera camera(16.0 / 9.0, 100, 50, 400, 20.0, Vector(13.0, 2.0, 3.0), Vector(0.0, 0.0, 0.0), Vector(0.0, 1.0, 0.0), 0.0, 10.0);
+    
+    camera.render(scene, "image.ppm");
+}
+
 int main() {
-    switch (3) {
+    switch (4) {
         case 1: randomSpheres(); break;
         case 2: twoSpheres(); break;
         case 3: earth(); break;
+        case 4: twoPerlinSpheres(); break;
     }
     return 0;
 }
