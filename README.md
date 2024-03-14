@@ -24,6 +24,7 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 * Defocus blur.
 * Motion blur.
 * Checked textures.
+* Perlin noise based textures.
 
 ## Building
 
