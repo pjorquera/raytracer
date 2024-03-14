@@ -85,3 +85,17 @@ double Perlin::noise(const Point& point) const {
 
     return interpolation(c, u, v, w);
 }
+
+double Perlin::turbulence(const Point& p, int depth) const {
+    auto accum = 0.0;
+    auto tmp = p;
+    auto weight = 1.0;
+
+    for (int i = 0; i < depth; i++) {
+        accum += weight * noise(tmp);
+        weight *= 0.5;
+        tmp *= 2.0;
+    }
+
+    return fabs(accum);
+}

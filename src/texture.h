@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <string>
+#include <cmath>
 
 class Texture {
   
@@ -104,7 +105,8 @@ public:
     NoiseTexture(double scale):_scale(scale) {}
     
     Color color(double u, double v, const Point &point) override {
-        return Color(1.0, 1.0, 1.0) * 0.5 * (1.0 + _noise.noise(_scale * point));
+        auto s = _scale * point;
+        return Color(1.0, 1.0, 1.0) * 0.5 * (1.0 + std::sin(s.z() + 10.0 * _noise.turbulence(s)));
     }
     
 };

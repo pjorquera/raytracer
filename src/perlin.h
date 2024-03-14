@@ -19,4 +19,5 @@ public:
     ~Perlin();
     
     double noise(const Point& point) const;
+    double turbulence(const Point& p, int depth = 7) const;
 };
