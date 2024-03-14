@@ -92,7 +92,7 @@ void twoPerlinSpheres() {
     scene->add(make_shared<Sphere>(Point(0.0, -1000.0, 0.0), 1000, make_shared<Lambertian>(checkerTexture)));
     scene->add(make_shared<Sphere>(Point(0.0, 1.2, 0.0), 1.2, make_shared<Lambertian>(perlinTexture)));
     
-    Camera camera(16.0 / 9.0, 100, 50, 400, 20.0, Vector(10.0, 2.0, 3.0), Vector(0.0, 1.0, 0.0), Vector(0.0, 1.0, 0.0));
+    Camera camera(16.0 / 9.0, 500, 50, 1920, 20.0, Vector(10.0, 2.0, 3.0), Vector(0.0, 1.0, 0.0), Vector(0.0, 1.0, 0.0));
     
     camera.render(scene, "image.ppm");
 }

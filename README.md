@@ -6,6 +6,8 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 
 ![render image with motion blur](docs/render-motion-blur.png)
 
+![render image with marble textyre](docs/render-marble.png)
+
 ## Features
 
 * Raytracing sphere geometries with front face detection.
