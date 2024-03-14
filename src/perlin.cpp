@@ -5,9 +5,9 @@
 using namespace std;
 
 void permute(int* p, int n) {
-    for (int i = n-1; i > 0; i--) {
-        int target = randomInt(0, i);
-        int tmp = p[i];
+    for (auto i = n - 1; i > 0; i--) {
+        auto target = randomInt(0, i);
+        auto tmp = p[i];
         p[i] = p[target];
         p[target] = tmp;
     }
@@ -29,9 +29,9 @@ double interpolation(Vector c[2][2][2], double u, double v, double w) {
     auto ww = w * w * (3.0 - 2.0 * w);
     auto accum = 0.0;
 
-    for (int i=0; i < 2; i++)
-        for (int j=0; j < 2; j++)
-            for (int k=0; k < 2; k++) {
+    for (auto i = 0; i < 2; i++)
+        for (auto j = 0; j < 2; j++)
+            for (auto k = 0; k < 2; k++) {
                 Vector weight_v(u - i, v - j, w - k);
                 accum += (i * uu + (1.0 - i) * (1.0 - uu))
                        * (j * vv + (1.0 - j) * (1.0 - vv))
@@ -44,7 +44,7 @@ double interpolation(Vector c[2][2][2], double u, double v, double w) {
 
 Perlin::Perlin() {
     _randomData = new Point[Perlin::POINT_COUNT];
-    for (int i = 0; i < Perlin::POINT_COUNT; ++i) {
+    for (auto i = 0; i < Perlin::POINT_COUNT; ++i) {
         _randomData[i] = Vector::random(-1.0, 1.0).unit();
     }
 
@@ -74,9 +74,9 @@ double Perlin::noise(const Point& point) const {
     auto k = int(floor(point.z()));
     Vector c[2][2][2];
 
-    for (int di=0; di < 2; di++)
-        for (int dj=0; dj < 2; dj++)
-            for (int dk=0; dk < 2; dk++)
+    for (auto di=0; di < 2; di++)
+        for (auto dj=0; dj < 2; dj++)
+            for (auto dk=0; dk < 2; dk++)
                 c[di][dj][dk] = _randomData[
                     _permuteX[(i + di) & 255] ^
                     _permuteY[(j + dj) & 255] ^
@@ -91,7 +91,7 @@ double Perlin::turbulence(const Point& p, int depth) const {
     auto tmp = p;
     auto weight = 1.0;
 
-    for (int i = 0; i < depth; i++) {
+    for (auto i = 0; i < depth; i++) {
         accum += weight * noise(tmp);
         weight *= 0.5;
         tmp *= 2.0;

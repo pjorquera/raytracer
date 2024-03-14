@@ -87,11 +87,12 @@ void earth() {
 void twoPerlinSpheres() {
     shared_ptr<Scene> scene = make_shared<Scene>();
     
+    auto checkerTexture = std::make_shared<CheckerTexture>(0.32, Color(.2, .3, .1), Color(.9, .9, .9));
     auto perlinTexture = make_shared<NoiseTexture>(4.0);
-    scene->add(make_shared<Sphere>(Point(0.0, -1000.0, 0.0), 1000, make_shared<Lambertian>(perlinTexture)));
-    scene->add(make_shared<Sphere>(Point(0.0, 2.0, 0.0), 2.0, make_shared<Lambertian>(perlinTexture)));
+    scene->add(make_shared<Sphere>(Point(0.0, -1000.0, 0.0), 1000, make_shared<Lambertian>(checkerTexture)));
+    scene->add(make_shared<Sphere>(Point(0.0, 1.2, 0.0), 1.2, make_shared<Lambertian>(perlinTexture)));
     
-    Camera camera(16.0 / 9.0, 100, 50, 400, 20.0, Vector(13.0, 2.0, 3.0), Vector(0.0, 0.0, 0.0), Vector(0.0, 1.0, 0.0), 0.0, 10.0);
+    Camera camera(16.0 / 9.0, 100, 50, 400, 20.0, Vector(10.0, 2.0, 3.0), Vector(0.0, 1.0, 0.0), Vector(0.0, 1.0, 0.0));
     
     camera.render(scene, "image.ppm");
 }
