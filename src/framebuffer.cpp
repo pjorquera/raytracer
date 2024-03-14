@@ -15,7 +15,7 @@ FrameBuffer::~FrameBuffer() {
 
 void FrameBuffer::draw(int x, int y, Color color) {
     static const Interval intensity(0.000, 0.999);
-    const auto pixelOffset = 3 * (x + y * _width);
+    auto pixelOffset = 3 * (x + y * _width);
     _buffer[pixelOffset + 0] = 256 * intensity.clamp(color.r());
     _buffer[pixelOffset + 1] = 256 * intensity.clamp(color.g());
     _buffer[pixelOffset + 2] = 256 * intensity.clamp(color.b());
@@ -26,7 +26,7 @@ void FrameBuffer::save(const std::string& filename) const {
     outputFile << "P3\n" << _width << ' ' << _height << "\n255\n";
     for (int y = 0; y < _height; ++y) {
         for (int x = 0; x < _width; ++x) {
-            const auto pixelOffset = 3 * (x + y * _width);
+            auto pixelOffset = 3 * (x + y * _width);
             outputFile << int(_buffer[pixelOffset + 0]) << ' '
                        << int(_buffer[pixelOffset + 1]) << ' '
                        << int(_buffer[pixelOffset + 2])

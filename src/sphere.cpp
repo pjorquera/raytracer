@@ -5,15 +5,15 @@
 using namespace std;
 
 bool Sphere::intersects(const Ray& ray, const Interval& interval, Hit& hit) const {
-    const auto currentCenter = _isMoving ? center(ray.time()) : _center;
-    const auto oc = ray.orig() - currentCenter;
-    const auto a = ray.dir().lengthSquared();
-    const auto halfB = Vector::dot(oc, ray.dir());
-    const auto c = oc.lengthSquared() - _radius * _radius;
-    const auto discriminant = halfB * halfB - a * c;
+    auto currentCenter = _isMoving ? center(ray.time()) : _center;
+    auto oc = ray.orig() - currentCenter;
+    auto a = ray.dir().lengthSquared();
+    auto halfB = Vector::dot(oc, ray.dir());
+    auto c = oc.lengthSquared() - _radius * _radius;
+    auto discriminant = halfB * halfB - a * c;
     if (discriminant < 0.0) return false;
     
-    const auto sqrtd = sqrt(discriminant);
+    auto sqrtd = sqrt(discriminant);
     auto root = (-halfB - sqrtd) / a;
     
     if (!interval.contains(root)) {
@@ -32,8 +32,8 @@ bool Sphere::intersects(const Ray& ray, const Interval& interval, Hit& hit) cons
 }
 
 void Sphere::computeUV(const Point& point, Hit& hit) {
-    const auto theta = acos(-point.y());
-    const auto phi = atan2(-point.z(), point.x()) + M_PI;
+    auto theta = acos(-point.y());
+    auto phi = atan2(-point.z(), point.x()) + M_PI;
 
     hit.setU(phi / (2.0 * M_PI));
     hit.setV(theta / M_PI);

@@ -87,7 +87,7 @@ public:
     }
     
     Vector unit() const {
-        const auto l = length();
+        auto l = length();
         return Vector(x() / l, y() / l, z() / l);
     }
     
@@ -99,7 +99,7 @@ public:
     }
     
     bool isNearZero() const {
-        const auto s = 1e-8;
+        auto s = 1e-8;
         return (fabs(_c[0]) < s) && (fabs(_c[1]) < s) && (fabs(_c[2]) < s);
     }
     
@@ -135,13 +135,13 @@ public:
     }
     
     static Vector randomOnHemisphere(const Vector& normal) {
-        const auto onUnitSphere = randomUnitInUnitSphere();
+        auto onUnitSphere = randomUnitInUnitSphere();
         if (Vector::dot(onUnitSphere, normal) > 0.0) return onUnitSphere;
         else return -onUnitSphere;
     }
     
     static Vector refract(const Vector& uv, const Vector& n, double etaiOverEtat) {
-        const auto cosTheta = std::fmin(Vector::dot(-uv, n), 1.0);
+        auto cosTheta = std::fmin(Vector::dot(-uv, n), 1.0);
         const Vector rOutPerp =  etaiOverEtat * (uv + cosTheta * n);
         const Vector rOutParallel = -std::sqrt(std::fabs(1.0 - rOutPerp.lengthSquared())) * n;
         return rOutPerp + rOutParallel;
@@ -149,7 +149,7 @@ public:
     
     static Vector randomInUnitDisc() {
         while (true) {
-            const auto vector = Vector(randomDouble(-1.0, 1.0), randomDouble(-1.0, 1.0), 0.0);
+            auto vector = Vector(randomDouble(-1.0, 1.0), randomDouble(-1.0, 1.0), 0.0);
             if (vector.lengthSquared() < 1.0) return vector;
         }
     }

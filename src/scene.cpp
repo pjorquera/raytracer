@@ -11,7 +11,7 @@ bool Scene::intersects(const Ray& ray, const Interval& interval, Hit& hit) const
     Hit currentHit;
     auto intersected = false;
     auto closesSoFar = interval.max();
-    for(const auto intersectable : _intersectables) {
+    for(auto intersectable : _intersectables) {
         if (intersectable->intersects(ray, Interval(interval.min(), closesSoFar), currentHit)) {
             intersected = true;
             closesSoFar = currentHit.t();

@@ -41,8 +41,8 @@ public:
     
     bool intersects(const Ray& ray, Interval interval) const {
         for (int a = 0; a < 3; a++) {
-            const auto invD = 1 / ray.dir()[a];
-            const auto orig = ray.orig()[a];
+            auto invD = 1 / ray.dir()[a];
+            auto orig = ray.orig()[a];
 
             auto t0 = (axis(a).min() - orig) * invD;
             auto t1 = (axis(a).max() - orig) * invD;

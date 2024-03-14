@@ -21,12 +21,12 @@ public:
     
     Sphere(const Point& center, double radius, const std::shared_ptr<Material>& material):
         _center(center),_radius(radius),_material(material),_isMoving(false) {
-            const auto rvec = Vector(_radius, _radius, _radius);
+            auto rvec = Vector(_radius, _radius, _radius);
             _boundingBox = Aabb(_center - rvec, _center + rvec);
         }
     Sphere(const Point& centerFrom, const Point& centerTo, double radius, const std::shared_ptr<Material>& material):
         _center(centerFrom),_radius(radius),_material(material),_isMoving(true) {
-            const auto rvec = Vector(_radius, _radius, _radius);
+            auto rvec = Vector(_radius, _radius, _radius);
             const Aabb box1(centerFrom - rvec, centerFrom + rvec);
             const Aabb box2(centerTo - rvec, centerTo + rvec);
             _boundingBox = Aabb(box1, box2);

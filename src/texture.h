@@ -54,9 +54,9 @@ public:
                    std::make_shared<SolidColor>(color2)) {}
     
     Color color(double u, double v, const Point &point) override {
-        const auto xInteger = int(std::floor(_invScale * point.x()));
-        const auto yInteger = int(std::floor(_invScale * point.y()));
-        const auto zInteger = int(std::floor(_invScale * point.z()));
+        auto xInteger = int(std::floor(_invScale * point.x()));
+        auto yInteger = int(std::floor(_invScale * point.y()));
+        auto zInteger = int(std::floor(_invScale * point.z()));
 
         const bool isEven = (xInteger + yInteger + zInteger) % 2 == 0;
 
@@ -80,11 +80,11 @@ public:
         u = Interval(0.0, 1.0).clamp(u);
         v = 1.0 - Interval(0.0, 1.0).clamp(v);
 
-        const auto x = int(u * _image.width());
-        const auto y = int(v * _image.height());
-        const auto pixel = _image.pixelData(x, y);
+        auto x = int(u * _image.width());
+        auto y = int(v * _image.height());
+        auto pixel = _image.pixelData(x, y);
 
-        const auto colorScale = 1.0 / 255.0;
+        auto colorScale = 1.0 / 255.0;
         return Color(colorScale * pixel[0], colorScale * pixel[1], colorScale * pixel[2]);
     }
     

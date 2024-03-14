@@ -69,13 +69,13 @@ public:
     Dielectric(double indexOfRefraction):_ir(indexOfRefraction) {}
     bool scatter(const Ray& ray, const Hit& hit, Color& attenuation, Ray& scattered) const override {
         attenuation = Color(1.0, 1.0, 1.0);
-        const auto refractionRatio = hit.frontFace() ? (1.0 / _ir) : _ir;
-        const auto unitDirection = ray.dir().unit();
+        auto refractionRatio = hit.frontFace() ? (1.0 / _ir) : _ir;
+        auto unitDirection = ray.dir().unit();
 
-        const auto cos_theta = std::fmin(Vector::dot(-unitDirection, hit.normal()), 1.0);
-        const auto sin_theta = std::sqrt(1.0 - cos_theta*cos_theta);
+        auto cos_theta = std::fmin(Vector::dot(-unitDirection, hit.normal()), 1.0);
+        auto sin_theta = std::sqrt(1.0 - cos_theta*cos_theta);
 
-        const auto cannotRefract = refractionRatio * sin_theta > 1.0;
+        auto cannotRefract = refractionRatio * sin_theta > 1.0;
         Vector direction;
 
         if (cannotRefract || Dielectric::reflectance(cos_theta, refractionRatio) > randomDouble())

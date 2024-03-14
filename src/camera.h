@@ -36,7 +36,7 @@ private:
     Vector _defocusDiskV;
     
     Point defocusDiskSample() {
-        const auto p = Vector::randomInUnitDisc();
+        auto p = Vector::randomInUnitDisc();
         return _lookFrom + (p.x() * _defocusDiskU) + (p.y() * _defocusDiskV);
     }
     
