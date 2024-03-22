@@ -15,9 +15,12 @@ private:
 public:
     
     Image():_data(nullptr) {}
+    Image(int width, int height, unsigned char* data):
+        _width(width),_height(height),_data(data),_bytesPerScanline(_width * _bytesPerPixel) {}
     ~Image();
     Image(const std::string& filename);
     bool load(const std::string& filename);
+    static bool save(int width, int height, const unsigned char* data, const std::string& filename);
   
     inline auto width() const { return _width; }
     inline auto height() const { return _height; }

@@ -1,7 +1,6 @@
 #include "framebuffer.h"
 #include "interval.h"
-
-#include <fstream>
+#include "image.h"
 
 using namespace std;
 
@@ -22,16 +21,5 @@ void FrameBuffer::draw(int x, int y, Color color) {
 }
 
 void FrameBuffer::save(const std::string& filename) const {
-    ofstream outputFile(filename);
-    outputFile << "P3\n" << _width << ' ' << _height << "\n255\n";
-    for (int y = 0; y < _height; ++y) {
-        for (int x = 0; x < _width; ++x) {
-            auto pixelOffset = 3 * (x + y * _width);
-            outputFile << int(_buffer[pixelOffset + 0]) << ' '
-                       << int(_buffer[pixelOffset + 1]) << ' '
-                       << int(_buffer[pixelOffset + 2])
-                       << '\n';
-        }
-    }
-    outputFile.close();
+    Image::save(_width, _height, _buffer, filename);
 }

@@ -4,6 +4,9 @@
 #define STBI_FAILURE_USERMSG
 #include "stb_image.h"
 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
+
 #include <iostream>
 
 using namespace std;
@@ -33,6 +36,10 @@ bool Image::load(const string& filename) {
     _data = stbi_load(filename.c_str(), &_width, &_height, &n, _bytesPerPixel);
     _bytesPerScanline = _width * _bytesPerPixel;
     return _data != nullptr;
+}
+
+bool Image::save(int width, int height, const unsigned char* data, const std::string& filename) {
+    return stbi_write_png(filename.c_str(), width, height, 3, data, width * 3);
 }
 
 const unsigned char* Image::pixelData(int x, int y) const {
