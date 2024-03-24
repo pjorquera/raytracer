@@ -49,5 +49,7 @@ public:
         auto padding = delta / 2.0;
         return Interval(_min - padding, _max + padding);
     }
+    
+    double size() const { return _max - _min; }
 
 };

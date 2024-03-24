@@ -18,7 +18,7 @@ private:
     double _t;
     double _u;
     double _v;
-    bool _fronFace;
+    bool _frontFace;
     
 public:
     
@@ -28,7 +28,7 @@ public:
     void setT(double t) { _t = t; }
     void setU(double u) { _u = u; }
     void setV(double v) { _v = v; }
-    void setFrontFace(bool frontFace) { _fronFace = frontFace; }
+    void setFrontFace(bool frontFace) { _frontFace = frontFace; }
     
     const Point& point() const { return _point; }
     const Vector& normal() const { return _normal; }
@@ -36,11 +36,11 @@ public:
     double t() const { return _t; }
     double u() const { return _u; }
     double v() const { return _v; }
-    bool frontFace() const { return _fronFace; }
+    bool frontFace() const { return _frontFace; }
     
     void setFaceNormal(const Ray& ray, const Vector& outwardNormal) {
-        _fronFace = Vector::dot(ray.dir(), outwardNormal) < 0.0;
-        _normal = _fronFace ? outwardNormal : -outwardNormal;
+        _frontFace = Vector::dot(ray.dir(), outwardNormal) < 0.0;
+        _normal = _frontFace ? outwardNormal : -outwardNormal;
     }
     
 };

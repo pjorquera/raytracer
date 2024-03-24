@@ -57,4 +57,12 @@ public:
         return true;
     }
     
+    Aabb pad() {
+        double delta = 0.0001;
+        Interval new_x = (_x.size() >= delta) ? _x : _x.expand(delta);
+        Interval new_y = (_y.size() >= delta) ? _y : _y.expand(delta);
+        Interval new_z = (_z.size() >= delta) ? _z : _z.expand(delta);
+        return Aabb(new_x, new_y, new_z);
+    }
+    
 };
