@@ -9,6 +9,9 @@ public:
     
     virtual ~Material() = default;
     virtual bool scatter(const Ray& ray, const Hit& hit, Color& attenuation, Ray& scattered) const = 0;
+    virtual Color emitted(double u, double v, const Point& point) const {
+        return Color(0.0, 0.0, 0.0);
+    }
     
 };
 
@@ -86,6 +89,27 @@ public:
         scattered = Ray(hit.point(), direction, ray.time());
         
         return true;
+    }
+    
+};
+
+class DiffuseLight : public Material {
+  
+private:
+    
+    std::shared_ptr<Texture> _texture;
+    
+public:
+    
+    DiffuseLight(const std::shared_ptr<Texture>& texture):_texture(texture) {}
+    DiffuseLight(const Color& color):_texture(std::make_shared<SolidColor>(color)) {}
+    
+    bool scatter(const Ray &ray, const Hit &hit, Color &attenuation, Ray &scattered) const override {
+        return false;
+    }
+    
+    Color emitted(double u, double v, const Point &point) const override {
+        return _texture->color(u, v, point);
     }
     
 };

@@ -6,7 +6,9 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 
 ![render image with motion blur](docs/render-motion-blur.png)
 
-![render image with marble textyre](docs/render-marble.png)
+![render image with marble texture](docs/render-marble.png)
+
+![render image with diffuse light](docs/render-light.png)
 
 ## Features
 
@@ -25,6 +27,7 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 * Motion blur.
 * Checked textures.
 * Perlin noise based textures.
+* Diffuse area light.
 
 ## Building
 

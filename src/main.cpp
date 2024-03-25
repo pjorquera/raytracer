@@ -67,7 +67,7 @@ void twoSpheres() {
     scene->add(make_shared<Sphere>(Point(0.0, -10.0, 0.0), 10.0, make_shared<Lambertian>(checker)));
     scene->add(make_shared<Sphere>(Point(0.0, 10.0, 0.0), 10.0, make_shared<Lambertian>(checker)));
 
-    Camera camera(16.0 / 9.0, 50, 50, 400, 20.0, Vector(13.0, 2.0, 3.0), Vector(0.0, 0.0, 0.0), Vector(0.0, 1.0, 0.0), 0.0, 10.0);
+    Camera camera(16.0 / 9.0, 50, 50, 400, 20.0, Vector(13.0, 2.0, 3.0), Vector(0.0, 0.0, 0.0), Vector(0.0, 1.0, 0.0), Color(0.7, 0.8, 1.0), 0.0, 10.0);
 
     camera.render(scene, "image.ppm");
 }
@@ -80,7 +80,7 @@ void earth() {
     shared_ptr<Scene> scene = make_shared<Scene>();
     scene->add(globe);
 
-    Camera camera(16.0 / 9.0, 100, 50, 400, 20.0, Vector(0.0, 0.0, 12.0), Vector(0.0, 0.0, 0.0), Vector(0.0, 1.0, 0.0), 0.0, 10.0);
+    Camera camera(16.0 / 9.0, 100, 50, 400, 20.0, Vector(0.0, 0.0, 12.0), Vector(0.0, 0.0, 0.0), Vector(0.0, 1.0, 0.0), Color(0.7, 0.8, 1.0), 0.0, 10.0);
     
     camera.render(scene, "image.ppm");
 }
@@ -113,18 +113,34 @@ void quads() {
     scene->add(make_shared<Quad>(Point(-2, 3, 1), Vector(4, 0, 0), Vector(0, 0, 4), upper_orange));
     scene->add(make_shared<Quad>(Point(-2,-3, 5), Vector(4, 0, 0), Vector(0, 0,-4), lower_teal));
 
-    Camera camera(1.0, 100, 50, 400, 80.0, Vector(0, 0, 9), Vector(0, 0, 0), Vector(0.0, 1.0, 0.0), 0.0);
+    Camera camera(1.0, 100, 50, 400, 80.0, Vector(0, 0, 9), Vector(0, 0, 0), Vector(0.0, 1.0, 0.0), Color(0.7, 0.8, 1.0), 0.0);
+
+    camera.render(scene, "image.png");
+}
+
+void simple_light() {
+    shared_ptr<Scene> scene = make_shared<Scene>();
+
+    auto pertext = make_shared<NoiseTexture>(4);
+    scene->add(make_shared<Sphere>(Point(0.0, -1000.0, 0.0), 1000.0, make_shared<Lambertian>(pertext)));
+    scene->add(make_shared<Sphere>(Point(0.0, 2.0, 0.0), 2.0, make_shared<Lambertian>(pertext)));
+
+    auto difflight = make_shared<DiffuseLight>(Color(4.0, 4.0, 4.0));
+    scene->add(make_shared<Quad>(Point(3.0, 1.0, -2.0), Vector(2.0, 0.0, 0.0), Vector(0.0, 2.0, 0.0), difflight));
+
+    Camera camera(16.0 / 9.0, 500, 50, 1920, 20.0, Vector(26.0, 3.0, 6.0), Vector(0.0, 2.0, 0.0), Vector(0.0, 1.0, 0.0), Color(0.0, 0.0, 0.0), 0.0);
 
     camera.render(scene, "image.png");
 }
 
 int main() {
-    switch (5) {
+    switch (6) {
         case 1: randomSpheres(); break;
         case 2: twoSpheres(); break;
         case 3: earth(); break;
         case 4: twoPerlinSpheres(); break;
         case 5: quads(); break;
+        case 6: simple_light(); break;
     }
     return 0;
 }

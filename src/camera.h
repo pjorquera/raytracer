@@ -35,6 +35,8 @@ private:
     Vector _defocusDiskU;
     Vector _defocusDiskV;
     
+    Color _background;
+    
     Point defocusDiskSample() {
         auto p = Vector::randomInUnitDisc();
         return _lookFrom + (p.x() * _defocusDiskU) + (p.y() * _defocusDiskV);
@@ -50,12 +52,15 @@ public:
            Vector lookFrom = Vector(13.0, 2.0, 3.0),
            Vector lookAt = Vector(0.0, 0.0, 0.0),
            Vector vup = Vector(0.0, 1.0, 0.0),
+           Color background = Color(0.7, 0.8, 1.0),
            double defocusAngle = 0.6,
            double focusDist = 10.0);
 
     double aspect() const { return _aspect; }
     const Viewport& viewport() const { return _viewport; }
 
+    Color color(const Ray& ray, int depth, const std::shared_ptr<const Intersectable>& intersectable);
+    Color background(const Ray& ray);
     void render(const std::shared_ptr<const Intersectable>& intersectable, const std::string& filename);
     
 };

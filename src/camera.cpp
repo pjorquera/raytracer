@@ -5,29 +5,34 @@
 
 using namespace std;
 
-inline Color background(const Ray& ray) {
+Color Camera::background(const Ray& ray) {
+    /*
     auto unitDir = ray.dir().unit();
     auto a = 0.5 * (unitDir.y() + 1.0);
     return (1.0 - a) * Color(1.0, 1.0, 1.0) + a * Color(0.5, 0.7, 1.0);
+    */
+    return _background;
 }
 
-inline Color color(const Ray& ray, int depth, const shared_ptr<const Intersectable>& intersectable) {
+Color Camera::color(const Ray& ray, int depth, const shared_ptr<const Intersectable>& intersectable) {
     if (depth <= 0) return Color(0.0, 0.0, 0.0);
     Hit hit;
-    if (intersectable->intersects(ray, Interval(0.001), hit)) {
-        Ray scattered;
-        Color attenuation;
-        if (hit.material()->scatter(ray, hit, attenuation, scattered))
-            return attenuation * color(scattered, depth - 1, intersectable);
-        return Color(0,0,0);
-    }
-    
-    return background(ray);
+    if (!intersectable->intersects(ray, Interval(0.001), hit)) return background(ray);
+
+    Ray scattered;
+    Color attenuation;
+    Color color_from_emission = hit.material()->emitted(hit.u(), hit.v(), hit.point());
+
+    if (!hit.material()->scatter(ray, hit, attenuation, scattered)) return color_from_emission;
+
+    Color color_from_scatter = attenuation * color(scattered, depth - 1, intersectable);
+
+    return color_from_emission + color_from_scatter;
 }
 
 Camera::Camera(double aspect, int samplesPerPixel,
-       int maxDepth, int imageWidth, double vfov, Vector lookFrom, Vector lookAt, Vector vup, double defocusAngle, double focusDist): _aspect(aspect), _samplesPerPixel(samplesPerPixel), _maxDepth(maxDepth), _lookFrom(lookFrom),
-           _lookAt(lookAt), _vup(vup), _defocusAngle(defocusAngle), _focusDist(focusDist)
+       int maxDepth, int imageWidth, double vfov, Vector lookFrom, Vector lookAt, Vector vup, Color background, double defocusAngle, double focusDist): _aspect(aspect), _samplesPerPixel(samplesPerPixel), _maxDepth(maxDepth), _lookFrom(lookFrom),
+           _lookAt(lookAt), _vup(vup), _background(background), _defocusAngle(defocusAngle), _focusDist(focusDist)
 {
     auto imageHeight = int(imageWidth / aspect);
     imageHeight = (imageHeight < 1) ? 1 : imageHeight;
