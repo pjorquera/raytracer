@@ -126,6 +126,7 @@ void simple_light() {
     scene->add(make_shared<Sphere>(Point(0.0, 2.0, 0.0), 2.0, make_shared<Lambertian>(pertext)));
 
     auto difflight = make_shared<DiffuseLight>(Color(4.0, 4.0, 4.0));
+    scene->add(make_shared<Sphere>(Point(0.0, 7.0, 0.0), 2.0, difflight));
     scene->add(make_shared<Quad>(Point(3.0, 1.0, -2.0), Vector(2.0, 0.0, 0.0), Vector(0.0, 2.0, 0.0), difflight));
 
     Camera camera(16.0 / 9.0, 500, 50, 1920, 20.0, Vector(26.0, 3.0, 6.0), Vector(0.0, 2.0, 0.0), Vector(0.0, 1.0, 0.0), Color(0.0, 0.0, 0.0), 0.0);
@@ -133,14 +134,35 @@ void simple_light() {
     camera.render(scene, "image.png");
 }
 
+void cornell_box() {
+    shared_ptr<Scene> scene = make_shared<Scene>();
+
+    auto red   = make_shared<Lambertian>(Color(.65, .05, .05));
+    auto white = make_shared<Lambertian>(Color(.73, .73, .73));
+    auto green = make_shared<Lambertian>(Color(.12, .45, .15));
+    auto light = make_shared<DiffuseLight>(Color(15, 15, 15));
+
+    scene->add(make_shared<Quad>(Point(555,0,0), Vector(0,555,0), Vector(0,0,555), green));
+    scene->add(make_shared<Quad>(Point(0,0,0), Vector(0,555,0), Vector(0,0,555), red));
+    scene->add(make_shared<Quad>(Point(343, 554, 332), Vector(-130,0,0), Vector(0,0,-105), light));
+    scene->add(make_shared<Quad>(Point(0,0,0), Vector(555,0,0), Vector(0,0,555), white));
+    scene->add(make_shared<Quad>(Point(555,555,555), Vector(-555,0,0), Vector(0,0,-555), white));
+    scene->add(make_shared<Quad>(Point(0,0,555), Vector(555,0,0), Vector(0,555,0), white));
+
+    Camera camera(1.0, 500, 50, 1920, 40.0, Vector(278, 278, -800), Vector(278, 278, 0), Vector(0.0, 1.0, 0.0), Color(0.0, 0.0, 0.0), 0.0);
+    
+    camera.render(scene, "image.png");
+}
+
 int main() {
-    switch (6) {
+    switch (7) {
         case 1: randomSpheres(); break;
         case 2: twoSpheres(); break;
         case 3: earth(); break;
         case 4: twoPerlinSpheres(); break;
         case 5: quads(); break;
         case 6: simple_light(); break;
+        case 7: cornell_box(); break;
     }
     return 0;
 }
