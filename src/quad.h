@@ -3,6 +3,7 @@
 #include "intersectable.h"
 #include "material.h"
 #include "aabb.h"
+#include "scene.h"
 
 #include <cmath>
 
@@ -64,3 +65,24 @@ public:
     }
     
 };
+
+inline std::shared_ptr<Intersectable> createBox(const Point& a, const Point& b, std::shared_ptr<Material> mat)
+{
+    auto sides = std::make_shared<Scene>();
+
+    auto min = Point(std::fmin(a.x(), b.x()), fmin(a.y(), b.y()), fmin(a.z(), b.z()));
+    auto max = Point(std::fmax(a.x(), b.x()), fmax(a.y(), b.y()), fmax(a.z(), b.z()));
+
+    auto dx = Vector(max.x() - min.x(), 0, 0);
+    auto dy = Vector(0, max.y() - min.y(), 0);
+    auto dz = Vector(0, 0, max.z() - min.z());
+
+    sides->add(std::make_shared<Quad>(Point(min.x(), min.y(), max.z()),  dx,  dy, mat)); // front
+    sides->add(std::make_shared<Quad>(Point(max.x(), min.y(), max.z()), -dz,  dy, mat)); // right
+    sides->add(std::make_shared<Quad>(Point(max.x(), min.y(), min.z()), -dx,  dy, mat)); // back
+    sides->add(std::make_shared<Quad>(Point(min.x(), min.y(), min.z()),  dz,  dy, mat)); // left
+    sides->add(std::make_shared<Quad>(Point(min.x(), max.y(), max.z()),  dx, -dz, mat)); // top
+    sides->add(std::make_shared<Quad>(Point(min.x(), min.y(), min.z()),  dx,  dz, mat)); // bottom
+
+    return sides;
+}

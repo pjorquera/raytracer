@@ -148,6 +148,9 @@ void cornell_box() {
     scene->add(make_shared<Quad>(Point(0,0,0), Vector(555,0,0), Vector(0,0,555), white));
     scene->add(make_shared<Quad>(Point(555,555,555), Vector(-555,0,0), Vector(0,0,-555), white));
     scene->add(make_shared<Quad>(Point(0,0,555), Vector(555,0,0), Vector(0,555,0), white));
+    
+    scene->add(createBox(Point(130, 0, 65), Point(295, 165, 230), white));
+    scene->add(createBox(Point(265, 0, 295), Point(430, 330, 460), white));
 
     Camera camera(1.0, 500, 50, 1920, 40.0, Vector(278, 278, -800), Vector(278, 278, 0), Vector(0.0, 1.0, 0.0), Color(0.0, 0.0, 0.0), 0.0);
     

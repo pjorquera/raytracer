@@ -10,6 +10,8 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 
 ![render image with diffuse light](docs/render-light.png)
 
+![render cornell box image](docs/render-cornell-box.png)
+
 ## Features
 
 * Raytracing sphere geometries with front face detection.
