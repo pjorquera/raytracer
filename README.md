@@ -27,7 +27,7 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 * Motion blur.
 * Checked textures.
 * Perlin noise based textures.
-* Diffuse area light.
+* Diffuse lights.
 
 ## Building
 
