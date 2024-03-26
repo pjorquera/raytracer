@@ -5,6 +5,8 @@
 #include "aabb.h"
 
 #include <memory>
+#include <limits>
+#include <cmath>
 
 class Material;
 
@@ -97,36 +99,72 @@ private:
     
 public:
     
+    RotateY(std::shared_ptr<Intersectable> intersectable, double angle): _intersectable(intersectable) {
+        auto radians = angle * (M_PI / 180.0);
+        _sinTheta = std::sin(radians);
+        _cosTheta = std::cos(radians);
+        _bbox = intersectable->boundingBox();
+        
+        auto infinity = std::numeric_limits<double>::infinity();
+
+        Point min( infinity,  infinity,  infinity);
+        Point max(-infinity, -infinity, -infinity);
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                for (int k = 0; k < 2; k++) {
+                    auto x = i*_bbox.x().max() + (1-i)*_bbox.x().min();
+                    auto y = j*_bbox.y().max() + (1-j)*_bbox.y().min();
+                    auto z = k*_bbox.z().max() + (1-k)*_bbox.z().min();
+
+                    auto newx =  _cosTheta*x + _sinTheta*z;
+                    auto newz = -_sinTheta*x + _cosTheta*z;
+
+                    Vector tester(newx, y, newz);
+
+                    for (int c = 0; c < 3; c++) {
+                        min[c] = fmin(min[c], tester[c]);
+                        max[c] = fmax(max[c], tester[c]);
+                    }
+                }
+            }
+        }
+
+        _bbox = Aabb(min, max);
+    }
+    
     bool intersects(const Ray &ray, const Interval &interval, Hit &hit) const override {
         // Change the ray from world space to object space
         auto origin = ray.orig();
         auto direction = ray.dir();
-
+        
         origin[0] = _cosTheta*ray.orig()[0] - _sinTheta*ray.orig()[2];
         origin[2] = _sinTheta*ray.orig()[0] + _cosTheta*ray.orig()[2];
-
+        
         direction[0] = _cosTheta*ray.dir()[0] - _sinTheta*ray.dir()[2];
         direction[2] = _sinTheta*ray.dir()[0] + _cosTheta*ray.dir()[2];
-
+        
         Ray rotated_r(origin, direction, ray.time());
-
+        
         // Determine where (if any) an intersection occurs in object space
         if (!_intersectable->intersects(rotated_r, interval, hit)) return false;
-
+        
         // Change the intersection point from object space to world space
         auto p = hit.point();
         p[0] =  _cosTheta*hit.point()[0] + _sinTheta*hit.point()[2];
         p[2] = -_sinTheta*hit.point()[0] + _cosTheta*hit.point()[2];
-
+        
         // Change the normal from object space to world space
         auto normal = hit.normal();
         normal[0] =  _cosTheta*hit.normal()[0] + _sinTheta*hit.normal()[2];
         normal[2] = -_sinTheta*hit.normal()[0] + _cosTheta*hit.normal()[2];
-
+        
         hit.setPoint(p);
         hit.setNormal(normal);
-
+        
         return true;
     }
+    
+    Aabb boundingBox() const override { return _bbox; }
     
 };

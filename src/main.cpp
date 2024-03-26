@@ -149,9 +149,16 @@ void cornell_box() {
     scene->add(make_shared<Quad>(Point(555,555,555), Vector(-555,0,0), Vector(0,0,-555), white));
     scene->add(make_shared<Quad>(Point(0,0,555), Vector(555,0,0), Vector(0,555,0), white));
     
-    scene->add(createBox(Point(130, 0, 65), Point(295, 165, 230), white));
-    scene->add(createBox(Point(265, 0, 295), Point(430, 330, 460), white));
+    shared_ptr<Intersectable> box1 = createBox(Point(0,0,0), Point(165,330,165), white);
+    box1 = make_shared<RotateY>(box1, 15);
+    box1 = make_shared<Translate>(box1, Vector(265,0,295));
+    scene->add(box1);
 
+    shared_ptr<Intersectable> box2 = createBox(Point(0,0,0), Point(165,165,165), white);
+    box2 = make_shared<RotateY>(box2, -18);
+    box2 = make_shared<Translate>(box2, Vector(130,0,65));
+    scene->add(box2);
+    
     Camera camera(1.0, 500, 50, 1920, 40.0, Vector(278, 278, -800), Vector(278, 278, 0), Vector(0.0, 1.0, 0.0), Color(0.0, 0.0, 0.0), 0.0);
     
     camera.render(scene, "image.png");
