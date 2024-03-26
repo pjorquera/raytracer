@@ -2,6 +2,8 @@
 
 A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 
+![build workflow](https://github.com/pjorquera/raytracer/actions/workflows/build.yml/badge.svg)
+
 ![render image](docs/render.png)
 
 ![render image with motion blur](docs/render-motion-blur.png)
