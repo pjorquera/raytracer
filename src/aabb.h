@@ -66,3 +66,11 @@ public:
     }
     
 };
+
+inline Aabb operator+(const Aabb& bbox, const Vector& offset) {
+    return Aabb(bbox.x() + offset.x(), bbox.y() + offset.y(), bbox.z() + offset.z());
+}
+
+inline Aabb operator+(const Vector& offset, const Aabb& bbox) {
+    return bbox + offset;
+}
