@@ -16,7 +16,7 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 
 ## Features
 
-* Raytracing sphere geometries with front face detection.
+* Raytracing sphere and quads geometries with front face detection.
 * Positionable camera.
 * Antialising.
 * Simple diffuse material.
@@ -32,6 +32,7 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 * Checked textures.
 * Perlin noise based textures.
 * Diffuse lights.
+* Smoke and volume rendering.
 
 ## Building
 

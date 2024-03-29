@@ -11,7 +11,10 @@ private:
     double _max;
   
 public:
-        
+    
+    static const Interval EMPTY;
+    static const Interval UNIVERSE;
+    
     Interval(double min = 0,
              double max = std::numeric_limits<double>::infinity()):
     _min(min), _max(max) {}
@@ -61,3 +64,6 @@ inline Interval operator+(const Interval& ival, double displacement) {
 inline Interval operator+(double displacement, const Interval& ival) {
     return ival + displacement;
 }
+
+inline const Interval Interval::EMPTY = Interval(std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity());
+inline const Interval Interval::UNIVERSE = Interval(-std::numeric_limits<double>::infinity(), +std::numeric_limits<double>::infinity());

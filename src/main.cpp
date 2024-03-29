@@ -4,6 +4,7 @@
 #include "bvh.h"
 #include "texture.h"
 #include "quad.h"
+#include "constantmedium.h"
 
 using namespace std;
 
@@ -164,8 +165,39 @@ void cornell_box() {
     camera.render(scene, "image.png");
 }
 
+void cornell_smoke() {
+    shared_ptr<Scene> scene = make_shared<Scene>();
+
+    auto red   = make_shared<Lambertian>(Color(.65, .05, .05));
+    auto white = make_shared<Lambertian>(Color(.73, .73, .73));
+    auto green = make_shared<Lambertian>(Color(.12, .45, .15));
+    auto light = make_shared<DiffuseLight>(Color(7, 7, 7));
+
+    scene->add(make_shared<Quad>(Point(555,0,0), Vector(0,555,0), Vector(0,0,555), green));
+    scene->add(make_shared<Quad>(Point(0,0,0), Vector(0,555,0), Vector(0,0,555), red));
+    scene->add(make_shared<Quad>(Point(113,554,127), Vector(330,0,0), Vector(0,0,305), light));
+    scene->add(make_shared<Quad>(Point(0,555,0), Vector(555,0,0), Vector(0,0,555), white));
+    scene->add(make_shared<Quad>(Point(0,0,0), Vector(555,0,0), Vector(0,0,555), white));
+    scene->add(make_shared<Quad>(Point(0,0,555), Vector(555,0,0), Vector(0,555,0), white));
+
+    shared_ptr<Intersectable> box1 = createBox(Point(0,0,0), Point(165,330,165), white);
+    box1 = make_shared<RotateY>(box1, 15);
+    box1 = make_shared<Translate>(box1, Vector(265,0,295));
+
+    shared_ptr<Intersectable> box2 = createBox(Point(0,0,0), Point(165,165,165), white);
+    box2 = make_shared<RotateY>(box2, -18);
+    box2 = make_shared<Translate>(box2, Vector(130,0,65));
+
+    scene->add(make_shared<ConstantMedium>(box1, 0.01, Color(0,0,0)));
+    scene->add(make_shared<ConstantMedium>(box2, 0.01, Color(1,1,1)));
+
+    Camera camera(1.0, 500, 50, 1920, 40.0, Point(278, 278, -800), Point(278, 278, 0), Vector(0.0, 1.0, 0.0), Color(0.0, 0.0, 0.0), 0.0);
+    
+    camera.render(scene, "image.png");
+}
+
 int main() {
-    switch (7) {
+    switch (8) {
         case 1: randomSpheres(); break;
         case 2: twoSpheres(); break;
         case 3: earth(); break;
@@ -173,6 +205,7 @@ int main() {
         case 5: quads(); break;
         case 6: simple_light(); break;
         case 7: cornell_box(); break;
+        case 8: cornell_smoke(); break;
     }
     return 0;
 }
