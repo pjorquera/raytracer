@@ -14,6 +14,8 @@ A simple C++ Raytracer based on "Ray Tracing in One Weekend" book.
 
 ![render cornell box image](docs/render-cornell-box.png)
 
+![render cornell box with smoke boxes](docs/render-smoke.png)
+
 ## Features
 
 * Raytracing sphere and quads geometries with front face detection.
